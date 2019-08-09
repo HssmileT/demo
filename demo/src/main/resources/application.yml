@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tbl_test?useSSL=false&serverTimezone=UTC
+    username: root
+    password: 1234
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  thymeleaf:
+   cache: false
+   enabled: false
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password:
+    timeout: 5000
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.model
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: countSql

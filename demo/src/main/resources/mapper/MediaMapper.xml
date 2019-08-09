@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.MediaDao">
+
+    <sql id="Media_Pojo">
+    user_name,url,create_time,uid,title,is_video,tid
+    </sql>
+    <sql id="Media_Database">
+        media
+    </sql>
+    <select id="selectAllImages" resultMap="mediaResultMap">
+        select
+        <trim prefix="(" suffix=")" suffixOverrides=","></trim>
+        <include refid="Media_Pojo"></include>
+
+        From
+        <include refid="Media_Database"></include>
+        Where 1=1
+        <if test="title!=null">
+            and title=#{title}
+        </if>
+        <if test="username!=null">
+            and user_name=#{username}
+        </if>
+    </select>
+    <resultMap id="mediaResultMap" type="com.example.demo.pojo.Media">
+        <!-- 定义主键  -->
+        <!-- property：主键在pojo中的属性名 -->
+        <!-- column：主键在数据库中的列名 -->
+        <id property="id" column="id"/>
+        <!-- 定义普通属性 -->
+        <result property="nickname" column="nick_name"/>
+        <result property="url" column="url"/>
+        <result property="createTime" column="create_time"/>
+        <result property="uid" column="uid"/>
+        <result property="tid" column="tid"/>
+        <result property="title" column="title"/>
+        <result property="isVideo" column="is_video"/>
+    </resultMap>
+</mapper>

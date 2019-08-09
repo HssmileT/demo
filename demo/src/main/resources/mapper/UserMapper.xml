@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.UserDao" >
+
+    <sql id="User_Pojo">
+    id,user_name,nike_name,password,phone,email,create_time,last_login_time,last_login_ip,level
+  </sql>
+
+    <sql id="User_Database">
+    user
+  </sql>
+
+    <resultMap id="userResultMap" type="com.example.demo.pojo.User" >
+        <!-- 定义主键  -->
+        <!-- property：主键在pojo中的属性名 -->
+        <!-- column：主键在数据库中的列名 -->
+        <id property="id" column="id" />
+        <!-- 定义普通属性 -->
+        <result property="username" column="user_name" />
+        <result property="nikename" column="nike_name" />
+        <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="createTime" column="create_time" />
+        <result property="email" column="email" />
+        <result property="lastLoginIp" column="last_login_ip" />
+        <result property="lastLoginTime" column="last_login_time" />
+    </resultMap>
+
+
+    <insert id="addUser" parameterType="com.example.demo.pojo.User">
+        INSERT INTO
+        <include refid="User_Database"/>
+        <trim prefix="(" suffix=")">
+            password,phone,user_name,nike_name,email,create_time,last_login_time,last_login_ip
+        </trim>
+            VALUES(#{password, jdbcType=VARCHAR},#{phone, jdbcType=VARCHAR},#{username, jdbcType=VARCHAR},#{nikename, jdbcType=VARCHAR},
+            #{email, jdbcType=VARCHAR},#{createTime, jdbcType=TIMESTAMP},#{lastLoginTime, jdbcType=TIMESTAMP},#{lastLoginIp, jdbcType=VARCHAR})
+    </insert>
+
+    <select id="selectUserById" resultMap="userResultMap">
+    select <include refid="User_Pojo"/>
+    from
+    <include refid="User_Database"/>
+    WHERE user_name=#{username} AND password=#{password}
+    </select>
+
+</mapper>
